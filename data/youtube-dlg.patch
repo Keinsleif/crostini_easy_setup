@@ -1,0 +1,26 @@
+--- /usr/lib/python2.7/dist-packages/youtube_dl_gui/mainframe.py	2021-03-04 11:11:44.075792374 +0900
++++ /usr/lib/python2.7/dist-packages/youtube_dl_gui/mainframe.py	2021-03-04 11:14:19.425787515 +0900
+@@ -997,17 +997,16 @@
+         if not wx.TheClipboard.IsOpened():
+ 
+             if wx.TheClipboard.Open():
+-                if wx.TheClipboard.IsSupported(wx.DataFormat(wx.DF_TEXT)):
+ 
+-                    data = wx.TextDataObject()
+-                    wx.TheClipboard.GetData(data)
++                data = wx.TextDataObject()
++                wx.TheClipboard.GetData(data)
+ 
+-                    data = data.GetText()
++                data = data.GetText()
+ 
+-                    if data[-1] != '\n':
+-                        data += '\n'
++                if data[-1] != '\n':
++                    data += '\n'
+ 
+-                    self._url_list.WriteText(data)
++                self._url_list.WriteText(data)
+ 
+                 wx.TheClipboard.Close()
+ 
