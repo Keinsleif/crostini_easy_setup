@@ -34,9 +34,8 @@ info "ダイアログが出た場合は\"Install\"を押してください"
 curl -# "https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks" -o /tmp/winetricks || abort "ダウンロードが中断されました"
 sudo chmod +x /tmp/winetricks
 sudo mv /tmp/winetricks /usr/bin/
-sh -c "echo 'export WINEARCH=win32 WINEPREFIX=~/.wine32' >> ~/.bashrc"
-source ~/.bashrc
-#export WINEARCH=win32 WINEPREFIX=~/.wine32
+echo 'export WINEARCH=win32 WINEPREFIX=~/.wine32' >> ~/.bashrc
+export WINEARCH=win32 WINEPREFIX=~/.wine32
 winetricks cjkfonts
 sleep 5
 info "インストールが完了しました"

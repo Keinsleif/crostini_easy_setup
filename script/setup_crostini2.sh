@@ -5,7 +5,7 @@ function info
 echo -e "\e[1;32m$@\e[0m"
 }
 
-MOZC_URL="https://github.com/kazuto28/crostini_easy_setup/raw/master/data/config1.db"
+MOZC_URL="https://raw.githubusercontent.com/kazuto28/crostini_easy_setup/master/data/config1.db"
 
 info "入力メゾットを設定しています..."
 cp ~/.config/fcitx/profile ~/.config/fcitx/profile.bak

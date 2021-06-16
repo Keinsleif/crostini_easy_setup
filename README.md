@@ -18,5 +18,5 @@ curl -L https://bit.ly/35nbaXH | bash
 
 # Wine Setup (Experimental)
 ```
-curl -L https://bit.ly/3cFWqYc | bash
+curl -L https://bit.ly/3gCGsPB | bash
 ```
