@@ -3,17 +3,17 @@ Crostiniの超簡単セットアップスクリプト(sh)
 
 # Crostini Setup
 ```
-curl -L https://bit.ly/3pT7Qx4 | bash
+curl -L https://bit.ly/3xpRazQ | bash
 ```
 
 # LibreOffice Setup
 ```
-curl -L https://bit.ly/35jvwkK | bash
+curl -L https://bit.ly/3pXMizj | bash
 ```
 
 # Youtube DL GUI Setup
 ```
-curl -L https://bit.ly/35nbaXH | bash
+curl -L https://bit.ly/3pZBiRX | bash
 ```
 
 # Wine Setup (Experimental)
