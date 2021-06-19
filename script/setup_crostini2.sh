@@ -2,7 +2,12 @@
 
 function info
 {
-echo -e "\e[1;32m$@\e[0m"
+    echo -e "\e[1;32m$@\e[0m"
+}
+
+function caution
+{
+    echo -e "\e[1;31m$@\e[0m"
 }
 
 MOZC_URL="https://raw.githubusercontent.com/kazuto28/crostini_easy_setup/master/data/config1.db"
@@ -32,9 +37,12 @@ echo -e "[Settings]\ngtk-theme-name=CrosAdapta\ngtk-font-name=Noto Sans CJK JP R
 
 echo -e "include \"/usr/share/themes/CrosAdapta/gtk-2.0/gtkrc\"\nstyle \"user-font\" {\n        font_name = \"Noto Sans CJK JP 9\"\n}\ngtk-font-name=\"Noto Sans CJK JP 9\"" > ~/.gtkrc-2.0
 
-info "インストールが終了しました"
 rm ~/.setup_linux2.sh
 sed -i -e "s|bash $HOME/\.setup_linux2\.sh||" ~/.bashrc
-info "５秒後に再起動します"
-sleep 5
-sudo /sbin/reboot
+info "インストールが終了しました\n"
+caution "ターミナルアイコンを右クリックし、Linuxをシャットダウンしてください。"
+caution "その後、再度ターミナルを開いてください。"
+while true
+do
+    sleep 365d
+done
