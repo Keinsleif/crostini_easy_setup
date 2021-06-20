@@ -40,7 +40,7 @@ echo -e "include \"/usr/share/themes/CrosAdapta/gtk-2.0/gtkrc\"\nstyle \"user-fo
 rm ~/.setup_linux2.sh
 sed -i -e "s|bash $HOME/\.setup_linux2\.sh||" ~/.bashrc
 info "インストールが終了しました\n"
-caution "ターミナルアイコンを右クリックし、Linuxをシャットダウンしてください。"
+caution "ターミナルアプリを右クリックし、Linuxをシャットダウンしてください。"
 caution "その後、再度ターミナルを開いてください。"
 while true
 do
