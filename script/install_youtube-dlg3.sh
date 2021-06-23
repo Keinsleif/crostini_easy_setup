@@ -15,7 +15,8 @@ info "ファイルをダウンロードしています..."
 curl -L# "https://raw.githubusercontent.com/kazuto28/youtube-dl-gui/master/dist/Youtube_DLG-0.4-py3-none-any.whl" -o /tmp/youtube-dlg.whl || abort "ダウンロードが中断されました"
 curl https://bootstrap.pypa.io/get-pip.py -o /tmp/get-pip.py || abort "ダウンロードが中断されました"
 
-info "pipをインストールしています..."
+info "必要なパッケージをインストールしています..."
+sudo apt install gettext python3-wxgtk4.0 python3-twodict
 sudo python3 /tmp/get-pip.py
 sudo pip3 install -U pip setuptools wheel
 
