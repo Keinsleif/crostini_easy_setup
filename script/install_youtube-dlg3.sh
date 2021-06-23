@@ -16,7 +16,7 @@ curl -L# "https://raw.githubusercontent.com/kazuto28/youtube-dl-gui/master/dist/
 curl https://bootstrap.pypa.io/get-pip.py -o /tmp/get-pip.py || abort "ダウンロードが中断されました"
 
 info "必要なパッケージをインストールしています..."
-sudo apt install -y gettext python3-wxgtk4.0 python3-twodict
+sudo apt install -y gettext python3-wxgtk4.0 python3-twodict python3-distutils
 sudo python3 /tmp/get-pip.py
 sudo pip3 install -U pip setuptools wheel
 
