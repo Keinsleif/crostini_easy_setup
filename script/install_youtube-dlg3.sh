@@ -19,7 +19,7 @@ function install_ydlg {
     curl -L# "http://ftp.jaist.ac.jp/debian/pool/main/p/python-pypubsub/python3-pubsub_4.0.3-4_all.deb" -o /tmp/install_ydlg/python3-pubsub.deb || abort "ダウンロードが中断されました"
 
     info "インストールしています..."
-    sudo apt install /tmp/install_ydlg/python3-pubsub.deb /tmp/youtube-dlg.deb
+    sudo apt install /tmp/install_ydlg/python3-pubsub.deb /tmp/install_ytdlg/youtube-dlg.deb
     sudo apt-mark auto python3-pubsub
 
     sudo rm -rf /tmp/install_ydlg
