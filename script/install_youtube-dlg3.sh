@@ -11,19 +11,32 @@ function info
 echo -e "\e[1;32m$@\e[0m"
 }
 
-info "ファイルをダウンロードしています..."
-curl -L# "https://raw.githubusercontent.com/kazuto28/youtube-dl-gui/master/dist/Youtube_DLG-0.4-py3-none-any.whl" -o /tmp/Youtube_DLG-0.4-py3-none-any.whl || abort "ダウンロードが中断されました"
-curl -L# "https://raw.githubusercontent.com/kazuto28/youtube-dl-gui/master/dist/youtube-dlg.desktop" -o /tmp/youtube-dlg.desktop || abort "ダウンロードが中断されました"
-curl -L# "https://bootstrap.pypa.io/get-pip.py" -o /tmp/get-pip.py || abort "ダウンロードが中断されました"
+function install_ydlg {
+    rm -rf /tmp/install_ydlg
+    mkdir -p /tmp/install_ydlg
+    info "ファイルをダウンロードしています..."
+    curl -L# "https://raw.githubusercontent.com/kazuto28/youtube-dl-gui/master/packages/youtube-dlg_0.4-1~w2d0_all.deb" -o /tmp/install_ydlg/youtube-dlg.deb || abort "ダウンロードが中断されました"
+    curl -L# "http://ftp.jaist.ac.jp/debian/pool/main/p/python-pypubsub/python3-pubsub_4.0.3-4_all.deb" -o /tmp/install_ydlg/python3-pubsub.deb || abort "ダウンロードが中断されました"
 
-info "必要なパッケージをインストールしています..."
-sudo apt install -y gettext python3-wxgtk4.0 python3-twodict python3-distutils ffmpeg
-sudo python3 /tmp/get-pip.py
-sudo pip3 install -U pip setuptools wheel
-sudo pip3 install PyPubSub
+    info "インストールしています..."
+    sudo apt install /tmp/install_ydlg/python3-pubsub.deb /tmp/youtube-dlg.deb
 
-info "Youtube-DLGをインストールしています..."
-sudo pip3 install /tmp/Youtube_DLG-0.4-py3-none-any.whl
-sudo install -Dm /tmp/youtube-dlg.desktop /usr/share/applications/youtube-dlg.desktop
+    sudo rm -rf /tmp/install_ydlg
 
-info "インストールが完了しました"
+    info "インストールが完了しました"
+}
+
+function uninstall_ydlg {
+    
+}
+
+case $@ in
+	install)	install_ydlg
+		;;
+	uninstall)	uninstall_ydlg
+		;;
+	help)	usage
+		;;
+	\?)	install
+		;;
+esac
