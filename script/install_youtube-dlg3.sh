@@ -39,6 +39,6 @@ case $@ in
 		;;
 	help)	usage
 		;;
-	* )	install
+	* )	install_ydlg
 		;;
 esac
