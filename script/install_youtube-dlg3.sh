@@ -12,17 +12,15 @@ echo -e "\e[1;32m$@\e[0m"
 }
 
 function install_ydlg {
-    rm -rf /tmp/install_ydlg
-    mkdir -p /tmp/install_ydlg
     info "ファイルをダウンロードしています..."
-    curl -L# "https://raw.githubusercontent.com/kazuto28/youtube-dl-gui/master/packages/youtube-dlg_0.4-1~w2d0_all.deb" -o /tmp/install_ydlg/youtube-dlg.deb || abort "ダウンロードが中断されました"
-    curl -L# "http://ftp.jaist.ac.jp/debian/pool/main/p/python-pypubsub/python3-pubsub_4.0.3-4_all.deb" -o /tmp/install_ydlg/python3-pubsub.deb || abort "ダウンロードが中断されました"
+    curl -L# "https://raw.githubusercontent.com/kazuto28/youtube-dl-gui/master/packages/youtube-dlg_0.4-1~w2d0_all.deb" -o /tmp/youtube-dlg.deb || abort "ダウンロードが中断されました"
+    curl -L# "http://ftp.jaist.ac.jp/debian/pool/main/p/python-pypubsub/python3-pubsub_4.0.3-4_all.deb" -o /tmp/python3-pubsub.deb || abort "ダウンロードが中断されました"
 
     info "インストールしています..."
-    sudo apt install -y /tmp/install_ydlg/python3-pubsub.deb /tmp/install_ytdlg/youtube-dlg.deb
+    sudo apt install -y /tmp/python3-pubsub.deb /tmp/youtube-dlg.deb
     sudo apt-mark auto python3-pubsub
 
-    sudo rm -rf /tmp/install_ydlg
+    sudo rm -f /tmp/youtube-dlg.deb /tmp/python3-pubsub.deb
 
     info "インストールが完了しました"
 }
