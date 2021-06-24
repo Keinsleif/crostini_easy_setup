@@ -20,6 +20,7 @@ function install_ydlg {
 
     info "インストールしています..."
     sudo apt install /tmp/install_ydlg/python3-pubsub.deb /tmp/youtube-dlg.deb
+    sudo apt-mark auto python3-pubsub
 
     sudo rm -rf /tmp/install_ydlg
 
@@ -27,7 +28,8 @@ function install_ydlg {
 }
 
 function uninstall_ydlg {
-    
+    sudo apt remove -y youtube-dlg
+    sudo apt autoremove -y
 }
 
 case $@ in
