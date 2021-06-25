@@ -15,6 +15,10 @@ curl -L https://bit.ly/3pXMizj | bash
 ```
 curl -L https://bit.ly/3pZBiRX | bash
 ```
+# Youtube DL GUI (Improved) Setup
+```
+curl -L https://bit.ly/3xW9GjB | bash
+```
 
 # Wine Setup (Experimental)
 ```
