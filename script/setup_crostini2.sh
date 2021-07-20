@@ -1,12 +1,10 @@
 #!/bin/bash
 
-function info
-{
+function info {
     echo -e "\e[1;32m$@\e[0m"
 }
 
-function caution
-{
+function caution {
     echo -e "\e[1;31m$@\e[0m"
 }
 

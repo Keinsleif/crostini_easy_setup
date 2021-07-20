@@ -1,14 +1,20 @@
 #!/bin/bash
 
-function abort
-{
-echo -e "\e[1;31m$@\e[0m" 1>&2
-exit 1
+function abort {
+    echo -e "\e[1;31m$@\e[0m" 1>&2
+    exit 1
 }
 
-function info
-{
-echo -e "\e[1;32m$@\e[0m"
+function info {
+    echo -e "\e[1;32m$@\e[0m"
+}
+
+function usage {
+	echo "Usage: $0 [command]"
+	echo
+	echo "commands:"
+	echo "    install - install Youtube-DL-Gui (Improved) (Default)"
+	echo "    uninstall - uninstall Youtube-DL-Gui (Improved)"
 }
 
 function install_ydlg {
@@ -30,7 +36,11 @@ function uninstall_ydlg {
     sudo apt autoremove -y
 }
 
-case $@ in
+if [ ! -z "$1" ]; then
+    CMD="$1"
+fi
+
+case $CMD in
 	install)	install_ydlg
 		;;
 	uninstall)	uninstall_ydlg

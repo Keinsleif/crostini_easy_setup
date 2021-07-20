@@ -1,41 +1,74 @@
 #!/bin/bash
 
-function abort
-{
-echo -e "\e[1;31m$@\e[0m" 1>&2
-exit 1
+function abort {
+    echo -e "\e[1;31m$@\e[0m" 1>&2
+    exit 1
 }
 
-function info
-{
-echo -e "\e[1;32m$@\e[0m"
+function info {
+    echo -e "\e[1;32m$@\e[0m"
 }
 
-info "インストールの準備をしています..."
-sudo dpkg --add-architecture i386
-curl -# https://dl.winehq.org/wine-builds/winehq.key -o /tmp/winehq.key || abort "ダウンロードが中断されました"
-sudo apt-key add /tmp/winehq.key
-sudo sh -c "echo 'deb https://dl.winehq.org/wine-builds/debian/ buster main' >> /etc/apt/sources.list.d/wine.list"
+function usage {
+	echo "Usage: $0 [command]"
+	echo
+	echo "commands:"
+	echo "    install - install Wine (Default)"
+	echo "    uninstall - uninstall Wine"
+}
 
-curl -# "https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/xUbuntu_18.04/Release.key" -o /tmp/Release.key || abort "ダウンロードが中断されました"
-sudo apt-key add /tmp/Release.key
-sudo sh -c "echo 'deb https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/xUbuntu_18.04/ ./' >> /etc/apt/sources.list.d/wine.list"
-sudo apt update
-sudo apt upgrade -y
+function install_wine {
+    sudo rm -f /tmp/winehq.key /tmp/Release.key /tmp/winetricks
 
-info "Wineをインストールしています..."
-sudo apt install -y --install-recommends winehq-stable
+    info "ファイルをダウンロードしています..."
+    curl -# "https://dl.winehq.org/wine-builds/winehq.key" -o /tmp/winehq.key || abort "ダウンロードが中断されました"
+    curl -# "https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/xUbuntu_18.04/Release.key" -o /tmp/Release.key || abort "ダウンロードが中断されました"
+    curl -# "https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks" -o /tmp/winetricks || abort "ダウンロードが中断されました"
 
-# This is required to use winetricks GUI (not necessary)
-#sudo apt install -y zenity
+    info "インストールの準備をしています..."
+    sudo dpkg --add-architecture i386
+    sudo apt-key add /tmp/winehq.key
+    sudo apt-key add /tmp/Release.key
+    sudo sh -c "echo -e 'deb https://dl.winehq.org/wine-builds/debian/ buster main\ndeb https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/xUbuntu_18.04/ ./\n' >> /etc/apt/sources.list.d/wine.list"
+    sudo apt update
+    sudo apt upgrade -y
 
-info "Wineを設定しています..."
-info "ダイアログが出た場合は\"Install\"を押してください"
-curl -# "https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks" -o /tmp/winetricks || abort "ダウンロードが中断されました"
-sudo chmod +x /tmp/winetricks
-sudo mv /tmp/winetricks /usr/bin/
-echo 'export WINEARCH=win32 WINEPREFIX=~/.wine32' >> ~/.bashrc
-export WINEARCH=win32 WINEPREFIX=~/.wine32
-winetricks cjkfonts
-sleep 5
-info "インストールが完了しました"
+    info "Wineをインストールしています..."
+    sudo apt install -y --install-recommends winehq-stable
+
+    # This is required to use winetricks GUI (not necessary)
+    #sudo apt install -y zenity
+
+    info "Wineを設定しています..."
+    info "ダイアログが出た場合は\"Install\"を押してください"
+    sudo chmod +x /tmp/winetricks
+    sudo mv /tmp/winetricks /usr/bin/
+    echo 'export WINEARCH=win32 WINEPREFIX=~/.wine32' >> ~/.bashrc
+    export WINEARCH=win32 WINEPREFIX=~/.wine32
+    winetricks cjkfonts
+    sudo rm -f /tmp/winehq.key /tmp/Release.key /tmp/winetricks
+    sleep 5
+    info "インストールが完了しました"
+}
+
+function uninstall_wine {
+    sudo apt uninstall -y winehq-stable
+    sudo apt autoremove -y
+    sudo rm /usr/bin/winetricks ~/.wine32 /etc/apt/sources.list.d/wine.list
+    sudo apt update
+}
+
+if [ ! -z "$1" ]; then
+    CMD="$1"
+fi
+
+case $CMD in
+	install)	install_ydlg
+		;;
+	uninstall)	uninstall_ydlg
+		;;
+	help)	usage
+		;;
+	* )	install_ydlg
+		;;
+esac

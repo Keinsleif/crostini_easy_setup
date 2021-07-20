@@ -1,18 +1,15 @@
 #!/bin/bash
 
-function abort
-{
-echo -e "\e[1;31m$@\e[0m" 1>&2
-exit 1
+function abort {
+	echo -e "\e[1;31m$@\e[0m" 1>&2
+	exit 1
 }
 
-function info
-{
-echo -e "\e[1;32m$@\e[0m"
+function info {
+	echo -e "\e[1;32m$@\e[0m"
 }
 
-function confirm
-{
+function confirm {
 	read -p "\e[1;31m$@\e[0m(y/n)" YN
 }
 
@@ -57,13 +54,17 @@ function uninstall_ydlg {
 }
 
 
-case $@ in
+if [ ! -z "$1" ]; then
+    CMD="$1"
+fi
+
+case $CMD in
 	install)	install_ydlg
 		;;
 	uninstall)	uninstall_ydlg
 		;;
 	help)	usage
 		;;
-	\?)	install
+	* )	install_ydlg
 		;;
 esac

@@ -1,8 +1,7 @@
 #!/bin/bash
 
-function info
-{
-echo -e "\e[1;32m$@\e[0m"
+function info {
+    echo -e "\e[1;32m$@\e[0m"
 }
 
 SND_URL="https://raw.githubusercontent.com/kazuto28/crostini_easy_setup/master/script/setup_crostini2.sh"

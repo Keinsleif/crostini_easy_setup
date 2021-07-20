@@ -1,18 +1,15 @@
 #!/bin/bash
 
-function abort
-{
+function abort {
     echo -e "\e[1;31m$@\e[0m" 1>&2
     exit 1
 }
 
-function info
-{
+function info {
     echo -e "\e[1;32m$@\e[0m"
 }
 
-function caution
-{
+function caution {
     echo -e "\e[1;31m$@\e[0m"
 }
 
@@ -24,8 +21,8 @@ LO_VERSION=${avail_versions[-1]}
 info "バージョン\"${LO_VERSION}\"をインストールします。"
 
 info "LibreOfficeを取得しています(数十分)..."
-curl -# https://ftp-srv2.kddilabs.jp/office/tdf/libreoffice/stable/${LO_VERSION}/deb/x86_64/LibreOffice_${LO_VERSION}_Linux_x86-64_deb.tar.gz -o /tmp/libreoffice.tar.gz || abort "ダウンロードが中断されました"
-curl -# https://ftp-srv2.kddilabs.jp/office/tdf/libreoffice/stable/${LO_VERSION}/deb/x86_64/LibreOffice_${LO_VERSION}_Linux_x86-64_deb_langpack_ja.tar.gz -o /tmp/libreoffice_lang.tar.gz || abort "ダウンロードが中断されました"
+curl -# "https://ftp-srv2.kddilabs.jp/office/tdf/libreoffice/stable/${LO_VERSION}/deb/x86_64/LibreOffice_${LO_VERSION}_Linux_x86-64_deb.tar.gz" -o /tmp/libreoffice.tar.gz || abort "ダウンロードが中断されました"
+curl -# "https://ftp-srv2.kddilabs.jp/office/tdf/libreoffice/stable/${LO_VERSION}/deb/x86_64/LibreOffice_${LO_VERSION}_Linux_x86-64_deb_langpack_ja.tar.gz" -o /tmp/libreoffice_lang.tar.gz || abort "ダウンロードが中断されました"
 
 
 info "LibreOfficeを解凍しています..."
