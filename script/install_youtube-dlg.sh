@@ -21,6 +21,7 @@ function usage {
 	echo "commands:"
 	echo "    install - install Youtube-DL-Gui (Default)"
 	echo "    uninstall - uninstall Youtube-DL-Gui"
+	echo "    help - show this message and exit"
 }
 
 function install_ydlg {
@@ -59,10 +60,15 @@ if [ ! -z "$1" ]; then
 fi
 
 case $CMD in
-	install)	install_ydlg
+	install)    install_ydlg
 		;;
-	uninstall)	uninstall_ydlg
-		;;
+	uninstall)
+        read -p "アンインストールを開始します。よろしいですか? (y/N): " yn
+        case "$yn" in
+            [yY]*) uninstall_ydlg;;
+            *) info "中止しました";;
+        esac
+        ;;
 	help)	usage
 		;;
 	* )	install_ydlg

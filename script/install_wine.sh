@@ -15,6 +15,7 @@ function usage {
 	echo "commands:"
 	echo "    install - install Wine (Default)"
 	echo "    uninstall - uninstall Wine"
+    echo "    help - show this message and exit"
 }
 
 function install_wine {
@@ -54,8 +55,10 @@ function install_wine {
 function uninstall_wine {
     sudo apt uninstall -y winehq-stable
     sudo apt autoremove -y
-    sudo rm /usr/bin/winetricks ~/.wine32 /etc/apt/sources.list.d/wine.list
+    sudo rm -rf /usr/bin/winetricks ~/.wine32 /etc/apt/sources.list.d/wine.list
+    sed -i "s@export WINEARCH=win32 WINEPREFIX=~/.wine32@@" ~/.bashrc
     sudo apt update
+    info "アンインストールが完了しました"
 }
 
 if [ ! -z "$1" ]; then
@@ -63,12 +66,17 @@ if [ ! -z "$1" ]; then
 fi
 
 case $CMD in
-	install)	install_ydlg
+	install)    install_wine
 		;;
-	uninstall)	uninstall_ydlg
-		;;
+	uninstall)
+        read -p "アンインストールを開始します。よろしいですか? (y/N): " yn
+        case "$yn" in
+            [yY]*) uninstall_wine;;
+            *) info "中止しました";;
+        esac
+        ;;
 	help)	usage
 		;;
-	* )	install_ydlg
+	* )	install_wine
 		;;
 esac
