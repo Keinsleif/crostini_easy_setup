@@ -30,7 +30,7 @@ function install_libreoffice {
 
     info "バージョン\"${LO_VERSION}\"をインストールします。"
 
-    info "LibreOfficeを取得しています(数十分)..."
+    info "LibreOfficeを取得しています(数分)..."
     curl -# "https://ftp-srv2.kddilabs.jp/office/tdf/libreoffice/stable/${LO_VERSION}/deb/x86_64/LibreOffice_${LO_VERSION}_Linux_x86-64_deb.tar.gz" -o /tmp/libreoffice.tar.gz || abort "ダウンロードが中断されました"
     curl -# "https://ftp-srv2.kddilabs.jp/office/tdf/libreoffice/stable/${LO_VERSION}/deb/x86_64/LibreOffice_${LO_VERSION}_Linux_x86-64_deb_langpack_ja.tar.gz" -o /tmp/libreoffice_lang.tar.gz || abort "ダウンロードが中断されました"
 
@@ -41,7 +41,8 @@ function install_libreoffice {
     tar xf libreoffice_lang.tar.gz
 
     info "フォントをインストールしています..."
-    sudo apt install -y fonts-ipafont fonts-ipaexfont fonts-mplus
+    sudo apt install -y fonts-takao
+    #sudo apt install fonts-ipafont fonts-ipaexfont fonts-mplus
 
     info "LibreOfficeをインストールしています..."
     sudo dpkg -E -i /tmp/LibreOffice_${LO_VERSION}*_Linux_x86-64_deb*/DEBS/*.deb
@@ -62,7 +63,7 @@ function install_libreoffice {
 }
 
 function uninstall_libreoffice {
-
+    info "not available"
 }
 
 if [ ! -z "$1" ]; then
