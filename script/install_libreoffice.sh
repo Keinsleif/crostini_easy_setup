@@ -45,7 +45,7 @@ function install_libreoffice {
     #sudo apt install fonts-ipafont fonts-ipaexfont fonts-mplus
 
     info "LibreOfficeをインストールしています..."
-    sudo dpkg -E -i /tmp/LibreOffice_${LO_VERSION}*_Linux_x86-64_deb*/DEBS/*.deb
+    sudo apt install /tmp/LibreOffice_${LO_VERSION}*_Linux_x86-64_deb*/DEBS/*.deb
 
     info "LibreOfficeを設定しています..."
     mkdir -p ~/.config/fontconfig
@@ -63,7 +63,8 @@ function install_libreoffice {
 }
 
 function uninstall_libreoffice {
-    info "not available"
+    sudo apt remove libreoffice* -y
+    info "Libreofficeは正常にアンインストールされました"
 }
 
 if [ ! -z "$1" ]; then
