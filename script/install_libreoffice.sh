@@ -31,9 +31,16 @@ function install_libreoffice {
     info "バージョン\"${LO_VERSION}\"をインストールします。"
 
     info "LibreOfficeを取得しています(数分)..."
-    curl -# "https://ftp-srv2.kddilabs.jp/office/tdf/libreoffice/stable/${LO_VERSION}/deb/x86_64/LibreOffice_${LO_VERSION}_Linux_x86-64_deb.tar.gz" -o /tmp/libreoffice.tar.gz || abort "ダウンロードが中断されました"
-    curl -# "https://ftp-srv2.kddilabs.jp/office/tdf/libreoffice/stable/${LO_VERSION}/deb/x86_64/LibreOffice_${LO_VERSION}_Linux_x86-64_deb_langpack_ja.tar.gz" -o /tmp/libreoffice_lang.tar.gz || abort "ダウンロードが中断されました"
-
+    if [ -f /tmp/libreoffice.tar.gz ]; then
+        curl -# "https://ftp-srv2.kddilabs.jp/office/tdf/libreoffice/stable/${LO_VERSION}/deb/x86_64/LibreOffice_${LO_VERSION}_Linux_x86-64_deb.tar.gz" -C - -o /tmp/libreoffice.tar.gz || abort "ダウンロードが中断されました"
+    else
+        curl -# "https://ftp-srv2.kddilabs.jp/office/tdf/libreoffice/stable/${LO_VERSION}/deb/x86_64/LibreOffice_${LO_VERSION}_Linux_x86-64_deb.tar.gz" -o /tmp/libreoffice.tar.gz || abort "ダウンロードが中断されました"
+    fi
+    if [ -f /tmp/libreoffice_lang.tar.gz ]; then
+        curl -# "https://ftp-srv2.kddilabs.jp/office/tdf/libreoffice/stable/${LO_VERSION}/deb/x86_64/LibreOffice_${LO_VERSION}_Linux_x86-64_deb_langpack_ja.tar.gz" -C - -o /tmp/libreoffice_lang.tar.gz || abort "ダウンロードが中断されました"
+    else
+        curl -# "https://ftp-srv2.kddilabs.jp/office/tdf/libreoffice/stable/${LO_VERSION}/deb/x86_64/LibreOffice_${LO_VERSION}_Linux_x86-64_deb_langpack_ja.tar.gz" -o /tmp/libreoffice_lang.tar.gz || abort "ダウンロードが中断されました"
+    fi
 
     info "LibreOfficeを解凍しています..."
     cd /tmp
