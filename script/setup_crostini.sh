@@ -26,7 +26,7 @@ sudo apt install -y fcitx-mozc
 #sudo apt install -y fonts-noto-cjk fonts-noto-cjk-extra
 
 info "Fcitxを入力メゾットに設定しています..."
-sudo sh -c "echo \"Environment=\\\"GTK_IM_MODULE=fcitx\\\"\nEnvironment=\\\"QT_IM_MODULE=fcitx\\\"\nEnvironment=\\\"XMODIFIRES=@im=fcitx\\\"\nEnvironment=\\\"GDK_BACKEND=x11\\\"\n\" >> /etc/systemd/user/cros-garcon.service.d/cros-garcon-override.conf"
+sudo bash -c "echo \"Environment=\\\"GTK_IM_MODULE=fcitx\\\"\nEnvironment=\\\"QT_IM_MODULE=fcitx\\\"\nEnvironment=\\\"XMODIFIRES=@im=fcitx\\\"\nEnvironment=\\\"GDK_BACKEND=x11\\\"\n\" >> /etc/systemd/user/cros-garcon.service.d/cros-garcon-override.conf"
 
 echo "/usr/bin/fcitx-autostart" >> ~/.sommelierrc
 

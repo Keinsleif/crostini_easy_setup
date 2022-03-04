@@ -30,7 +30,7 @@ function install_wine {
     sudo dpkg --add-architecture i386
     sudo apt-key add /tmp/winehq.key
     sudo apt-key add /tmp/Release.key
-    sudo sh -c "echo -e 'deb https://dl.winehq.org/wine-builds/debian/ buster main\ndeb https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/xUbuntu_18.04/ ./\n' >> /etc/apt/sources.list.d/wine.list"
+    sudo bash -c "echo -e 'deb https://dl.winehq.org/wine-builds/debian/ buster main\ndeb https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/xUbuntu_18.04/ ./\n' >> /etc/apt/sources.list.d/wine.list"
     sudo apt update
     sudo apt upgrade -y
 
