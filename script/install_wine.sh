@@ -1,5 +1,7 @@
 #!/bin/bash
 
+TMP_DIR = "/tmp/install_wine"
+
 function abort {
     echo -e "\e[1;31m$@\e[0m" 1>&2
     exit 1
@@ -19,16 +21,17 @@ function usage {
 }
 
 function install_wine {
-    sudo rm -f /tmp/winehq.key /tmp/Release.key /tmp/winetricks /tmp/wine.gpg
+    rm -rf ${TMP_DIR}
+    mkdir -p ${TMP_DIR}
 
     info "ファイルをダウンロードしています..."
-    gpg --no-default-keyring --keyring /tmp/wine.gpg --fetch-keys "https://dl.winehq.org/wine-builds/winehq.key"
-    curl -#sSL "https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks" -o /tmp/winetricks || abort "ダウンロードが中断されました"
+    gpg --no-default-keyring --keyring ${TMP_DIR}/wine.gpg --fetch-keys "https://dl.winehq.org/wine-builds/winehq.key"
+    curl -#sSL "https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks" -o ${TMP_DIR}/winetricks || abort "ダウンロードが中断されました"
 
     info "インストールの準備をしています..."
     sudo dpkg --add-architecture i386
     sudo mkdir -p /usr/local/share/keyrings
-    sudo gpg --no-default-keyring --keyring /tmp/wine.gpg --export --output /usr/local/share/keyrings/wine.gpg
+    sudo gpg --no-default-keyring --keyring ${TMP_DIR}/wine.gpg --export --output /usr/local/share/keyrings/wine.gpg
     sudo bash -c "echo -e 'deb [signed-by=/usr/local/share/keyrings/wine.gpg] https://dl.winehq.org/wine-builds/debian/ bullseye main' > /etc/apt/sources.list.d/wine.list"
     sudo apt update
 
@@ -40,12 +43,12 @@ function install_wine {
 
     info "Wineを設定しています..."
     info "ダイアログが出た場合は\"Install\"を押してください"
-    sudo chmod +x /tmp/winetricks
-    sudo mv /tmp/winetricks /usr/bin/
+    chmod +x ${TMP_DIR}/winetricks
+    sudo mv ${TMP_DIR}/winetricks /usr/bin/
     echo 'export WINEARCH=win32 WINEPREFIX=~/.wine32' >> ~/.bashrc
     export WINEARCH=win32 WINEPREFIX=~/.wine32
     winetricks cjkfonts
-    sudo rm -f /tmp/winehq.key /tmp/Release.key /tmp/winetricks
+    sudo rm -rf ${TMP_DIR}
     sleep 5
     info "インストールが完了しました"
     info "ターミナルを一度閉じ、再度開いてください"
