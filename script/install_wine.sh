@@ -22,14 +22,14 @@ function install_wine {
     sudo rm -f /tmp/winehq.key /tmp/Release.key /tmp/winetricks
 
     info "ファイルをダウンロードしています..."
-    curl -# "https://dl.winehq.org/wine-builds/winehq.key" -o /tmp/winehq.key || abort "ダウンロードが中断されました"
-    curl -# "https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/xUbuntu_18.04/Release.key" -o /tmp/Release.key || abort "ダウンロードが中断されました"
-    curl -# "https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks" -o /tmp/winetricks || abort "ダウンロードが中断されました"
+    curl -#sSL "https://dl.winehq.org/wine-builds/winehq.key" -o /tmp/winehq.key || abort "ダウンロードが中断されました"
+    curl -#sSL "https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/xUbuntu_18.04/Release.key" -o /tmp/Release.key || abort "ダウンロードが中断されました"
+    curl -#sSL "https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks" -o /tmp/winetricks || abort "ダウンロードが中断されました"
 
     info "インストールの準備をしています..."
     sudo dpkg --add-architecture i386
-    sudo apt-key add /tmp/winehq.key
-    sudo apt-key add /tmp/Release.key
+    sudo gpg --no-default-keyring --keyring /etc/apt/trused.gpg.d/winehq.gpg /tmp/winehq.key
+    sudo gpg --no-default-keyring --keyring /etc/apt/trused.gpg.d/emu-opensuse.gpg /tmp/Release.key
     sudo bash -c "echo -e 'deb https://dl.winehq.org/wine-builds/debian/ buster main\ndeb https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/xUbuntu_18.04/ ./\n' >> /etc/apt/sources.list.d/wine.list"
     sudo apt update
     sudo apt upgrade -y
