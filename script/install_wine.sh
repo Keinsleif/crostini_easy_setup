@@ -19,7 +19,7 @@ function usage {
 }
 
 function install_wine {
-    sudo rm -f /tmp/winehq.key /tmp/Release.key /tmp/winetricks
+    sudo rm -f /tmp/winehq.key /tmp/Release.key /tmp/winetricks /tmp/wine.gpg
 
     info "ファイルをダウンロードしています..."
     curl -#sSL "https://dl.winehq.org/wine-builds/winehq.key" -o /tmp/winehq.key || abort "ダウンロードが中断されました"
@@ -28,9 +28,11 @@ function install_wine {
 
     info "インストールの準備をしています..."
     sudo dpkg --add-architecture i386
-    sudo gpg --no-default-keyring --keyring /etc/apt/trused.gpg.d/winehq.gpg /tmp/winehq.key
-    sudo gpg --no-default-keyring --keyring /etc/apt/trused.gpg.d/emu-opensuse.gpg /tmp/Release.key
-    sudo bash -c "echo -e 'deb https://dl.winehq.org/wine-builds/debian/ buster main\ndeb https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/xUbuntu_18.04/ ./\n' >> /etc/apt/sources.list.d/wine.list"
+    sudo mkdir -p /usr/local/share/keyrings
+    sudo gpg --no-default-keyring --keyring /tmp/wine.gpg --import /tmp/winehq.key
+    sudo gpg --no-default-keyring --keyring /tmp/wine.gpg --import /tmp/Release.key
+    sudo gpg --no-default-keyring --keyring /tmp/wine.gpg --export --output /usr/local/share/keyrings/wine.gpg
+    sudo bash -c "echo -e 'deb [signed-by=/usr/local/share/keyrings/wine.gpg] https://dl.winehq.org/wine-builds/debian/ buster main\ndeb [signed-by=/usr/local/share/keyrings/wine.gpg] https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/xUbuntu_18.04/ ./\n' >> /etc/apt/sources.list.d/wine.list"
     sudo apt update
     sudo apt upgrade -y
 
@@ -55,7 +57,7 @@ function install_wine {
 function uninstall_wine {
     sudo apt uninstall -y winehq-stable
     sudo apt autoremove -y
-    sudo rm -rf /usr/bin/winetricks ~/.wine32 /etc/apt/sources.list.d/wine.list
+    sudo rm -rf /usr/bin/winetricks ~/.wine32 /etc/apt/sources.list.d/wine.list /usr/local/share/keyrings/wine.gpg
     sed -i "s@export WINEARCH=win32 WINEPREFIX=~/.wine32@@" ~/.bashrc
     sudo apt update
     info "アンインストールが完了しました"
