@@ -1,7 +1,5 @@
 #!/bin/bash
 
-TMP_DIR = "/tmp/install_wine"
-
 function abort {
     echo -e "\e[1;31m$@\e[0m" 1>&2
     exit 1
@@ -21,6 +19,7 @@ function usage {
 }
 
 function install_wine {
+    TMP_DIR = "/tmp/install_wine"
     rm -rf ${TMP_DIR}
     mkdir -p ${TMP_DIR}
 
@@ -31,7 +30,7 @@ function install_wine {
     info "インストールの準備をしています..."
     sudo dpkg --add-architecture i386
     sudo mkdir -p /usr/local/share/keyrings
-    sudo gpg --no-default-keyring --keyring ${TMP_DIR}/wine.gpg --export --output /usr/local/share/keyrings/wine.gpg
+    sudo gpg --yes --no-default-keyring --keyring ${TMP_DIR}/wine.gpg --export --output /usr/local/share/keyrings/wine.gpg
     sudo bash -c "echo -e 'deb [signed-by=/usr/local/share/keyrings/wine.gpg] https://dl.winehq.org/wine-builds/debian/ bullseye main' > /etc/apt/sources.list.d/wine.list"
     sudo apt update
 
