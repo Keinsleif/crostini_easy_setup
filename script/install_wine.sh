@@ -22,19 +22,15 @@ function install_wine {
     sudo rm -f /tmp/winehq.key /tmp/Release.key /tmp/winetricks /tmp/wine.gpg
 
     info "ファイルをダウンロードしています..."
-    curl -#sSL "https://dl.winehq.org/wine-builds/winehq.key" -o /tmp/winehq.key || abort "ダウンロードが中断されました"
-    curl -#sSL "https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/xUbuntu_18.04/Release.key" -o /tmp/Release.key || abort "ダウンロードが中断されました"
+    gpg --no-default-keyring --keyring /tmp/wine.gpg --fetch-keys "https://dl.winehq.org/wine-builds/winehq.key"
     curl -#sSL "https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks" -o /tmp/winetricks || abort "ダウンロードが中断されました"
 
     info "インストールの準備をしています..."
     sudo dpkg --add-architecture i386
     sudo mkdir -p /usr/local/share/keyrings
-    sudo gpg --no-default-keyring --keyring /tmp/wine.gpg --import /tmp/winehq.key
-    sudo gpg --no-default-keyring --keyring /tmp/wine.gpg --import /tmp/Release.key
     sudo gpg --no-default-keyring --keyring /tmp/wine.gpg --export --output /usr/local/share/keyrings/wine.gpg
-    sudo bash -c "echo -e 'deb [signed-by=/usr/local/share/keyrings/wine.gpg] https://dl.winehq.org/wine-builds/debian/ buster main\ndeb [signed-by=/usr/local/share/keyrings/wine.gpg] https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/xUbuntu_18.04/ ./\n' >> /etc/apt/sources.list.d/wine.list"
+    sudo bash -c "echo -e 'deb [signed-by=/usr/local/share/keyrings/wine.gpg] https://dl.winehq.org/wine-builds/debian/ bullseye main' > /etc/apt/sources.list.d/wine.list"
     sudo apt update
-    sudo apt upgrade -y
 
     info "Wineをインストールしています..."
     sudo apt install -y --install-recommends winehq-stable
@@ -52,6 +48,7 @@ function install_wine {
     sudo rm -f /tmp/winehq.key /tmp/Release.key /tmp/winetricks
     sleep 5
     info "インストールが完了しました"
+    info "ターミナルを一度閉じ、再度開いてください"
 }
 
 function uninstall_wine {
