@@ -27,7 +27,7 @@ sed -i -e "s/.*InactivateKey=.*/InactivateKey=MUHENKAN/g" ~/.config/fcitx/config
 #mozc
 info "Mozc設定ファイルを取得しています..."
 curl -L# $MOZC_URL -o /tmp/config1.db || abort "ダウンロードが中断されました"
-cp /tmp/config1.db ~/.mozc/
+cp /tmp/config1.db ~/.config/mozc/
 rm /tmp/config1.db
 
 mkdir -p ~/.config/gtk-3.0
