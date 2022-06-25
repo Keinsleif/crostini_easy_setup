@@ -54,10 +54,6 @@ function install_libreoffice {
     info "LibreOfficeをインストールしています..."
     sudo apt install /tmp/LibreOffice_${LO_VERSION}*_Linux_x86-64_deb*/DEBS/*.deb
 
-    info "LibreOfficeを設定しています..."
-    mkdir -p ~/.config/fontconfig
-    echo -e '<?xml version="1.0"?>\n<!DOCTYPE fontconfig SYSTEM "fonts.dtd">\n<fontconfig>\n  <match target="font">\n    <edit mode=\"assign\" name=\"embeddedbitmap\">\n      <bool>false</bool>\n    </edit>\n  </match>\n  <match target=\"font\">\n    <edit mode=\"assign\" name=\"hinting\">\n  \n   <bool>false</bool>\n    </edit>\n  </match>\n  <match target=\"font\">\n    <edit mode=\"assign\" name=\"hintstyle\">\n      <const>hintnone</const>\n    </edit>\n  </match>\n  <match target=\"font\">\n    <edit mode=\"assign\" name=\"antialias\">\n      <bool>true</bool>\n    </edit>\n  </match>\n  <alias>\n    <family>serif</family>\n    <prefer>\n      <family>Noto Serif</family>\n      <family>Source Serif Pro</family>\n      <family>IPAexMincho</family>\n      <family>IPAMincho</family>\n    </prefer>\n  </alias>\n  <alias>\n    <family>sans-serif</family>\n    <prefer>\n      <family>Noto Sans</family>\n      <family>Source Sans Pro</family>\n      <family>IPAexGothic</family>\n      <family>IPAGothic</family>\n    </prefer>\n  </alias>\n  <alias>\n    <family>monospace</family>\n    <prefer>\n    <family>Inconsolata</family>\n    <family>Noto Sans Mono CJK JP</family>\n    </prefer>\n  </alias>\n</fontconfig>" > ~/.config/fontconfig/fonts.con'
-
     rm -rf /tmp/LibreOffice_${LO_VERSION}*_Linux_x86-64_deb*
     rm -f /tmp/libreoffice*.tar.gz
     info "インストールが完了しました。\n"
