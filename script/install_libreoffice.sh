@@ -25,6 +25,7 @@ function usage {
 function install_libreoffice {
     info "バージョン情報を取得しています..."
     avail_versions=(`curl -fsSL https://ftp-srv2.kddilabs.jp/office/tdf/libreoffice/stable/ | grep "\[DIR\]" | sed -r "s@<img.*?href=\"(.*?)/\".*?-@\1@" | xargs`)
+    avail_versions=(`printf "%s\n" "${avail_versions[@]}" | sort -n`)
     LO_VERSION=${avail_versions[$((${#a[@]}-2))]}
     if [ -f /usr/local/bin/libreoffice* ]; then
         a=(`/usr/local/bin/libreoffice* --version`)
