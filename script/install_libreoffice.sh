@@ -25,7 +25,7 @@ function usage {
 function install_libreoffice {
     info "バージョン情報を取得しています..."
     avail_versions=(`curl -fsSL https://ftp-srv2.kddilabs.jp/office/tdf/libreoffice/stable/ | grep "\[DIR\]" | sed -r "s@<img.*?href=\"(.*?)/\".*?-@\1@" | xargs`)
-    LO_VERSION=${avail_versions[-1]}
+    LO_VERSION=${avail_versions[$((${#a[@]}-2))]}
     if [ -f /usr/local/bin/libreoffice* ]; then
         a=(`/usr/local/bin/libreoffice* --version`)
         IFS=. v=(${a[1]})
@@ -34,7 +34,7 @@ function install_libreoffice {
         ver_num=`IFS=""; echo "${v[*]}"`
         IFS=. v=($LO_VERSION)
         lo_ver=`IFS=""; echo "${v[*]}"`
-        if [ "${version}" = "${LO_VERSION}" ]; then
+        if [ "${version}" -ge "${LO_VERSION}" ]; then
             info "最新バージョンがすでにインストールされています"
             exit
         elif [ ${ver_num} -lt ${lo_ver} ]; then
