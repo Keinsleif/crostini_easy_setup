@@ -26,26 +26,42 @@ function install_libreoffice {
     info "バージョン情報を取得しています..."
     avail_versions=(`curl -fsSL https://ftp-srv2.kddilabs.jp/office/tdf/libreoffice/stable/ | grep "\[DIR\]" | sed -r "s@<img.*?href=\"(.*?)/\".*?-@\1@" | xargs`)
     LO_VERSION=${avail_versions[-1]}
-    #LO_VERSION="7.1.4"
+    if [ -f /usr/local/bin/libreoffice* ]; then
+        a=(`/usr/local/bin/libreoffice* --version`)
+        IFS=. v=(${a[1]})
+        unset v[-1]
+        version=`IFS="."; echo "${v[*]}"`
+        ver_num=`IFS=""; echo "${v[*]}"`
+        IFS=. v=($LO_VERSION)
+        lo_ver=`IFS=""; echo "${v[*]}"`
+        echo $lo_ver
+        if [ "${version}" = "${LO_VERSION}" ]; then
+            info "最新バージョンがすでにインストールされています"
+            exit
+        elif [ ${ver_num} -lt ${lo_ver} ]; then
+            uninstall_libreoffice
+        fi
+    fi
+    unset IFS
 
     info "バージョン\"${LO_VERSION}\"をインストールします。"
 
     info "LibreOfficeを取得しています(数分)..."
     if [ -f /tmp/libreoffice.tar.gz ]; then
-        curl -# "https://ftp-srv2.kddilabs.jp/office/tdf/libreoffice/stable/${LO_VERSION}/deb/x86_64/LibreOffice_${LO_VERSION}_Linux_x86-64_deb.tar.gz" -C - -o /tmp/libreoffice.tar.gz || abort "ダウンロードが中断されました"
+        curl -# "https://ftp-srv2.kddilabs.jp/office/tdf/libreoffice/stable/${LO_VERSION}/deb/x86_64/LibreOffice_${LO_VERSION}_Linux_x86-64_deb.tar.gz" -C - -o /tmp/libreoffice_${LO_VERSION}.tar.gz || abort "ダウンロードが中断されました"
     else
-        curl -# "https://ftp-srv2.kddilabs.jp/office/tdf/libreoffice/stable/${LO_VERSION}/deb/x86_64/LibreOffice_${LO_VERSION}_Linux_x86-64_deb.tar.gz" -o /tmp/libreoffice.tar.gz || abort "ダウンロードが中断されました"
+        curl -# "https://ftp-srv2.kddilabs.jp/office/tdf/libreoffice/stable/${LO_VERSION}/deb/x86_64/LibreOffice_${LO_VERSION}_Linux_x86-64_deb.tar.gz" -o /tmp/libreoffice_${LO_VERSION}.tar.gz || abort "ダウンロードが中断されました"
     fi
     if [ -f /tmp/libreoffice_lang.tar.gz ]; then
-        curl -# "https://ftp-srv2.kddilabs.jp/office/tdf/libreoffice/stable/${LO_VERSION}/deb/x86_64/LibreOffice_${LO_VERSION}_Linux_x86-64_deb_langpack_ja.tar.gz" -C - -o /tmp/libreoffice_lang.tar.gz || abort "ダウンロードが中断されました"
+        curl -# "https://ftp-srv2.kddilabs.jp/office/tdf/libreoffice/stable/${LO_VERSION}/deb/x86_64/LibreOffice_${LO_VERSION}_Linux_x86-64_deb_langpack_ja.tar.gz" -C - -o /tmp/libreoffice_lang_${LO_VERSION}.tar.gz || abort "ダウンロードが中断されました"
     else
-        curl -# "https://ftp-srv2.kddilabs.jp/office/tdf/libreoffice/stable/${LO_VERSION}/deb/x86_64/LibreOffice_${LO_VERSION}_Linux_x86-64_deb_langpack_ja.tar.gz" -o /tmp/libreoffice_lang.tar.gz || abort "ダウンロードが中断されました"
+        curl -# "https://ftp-srv2.kddilabs.jp/office/tdf/libreoffice/stable/${LO_VERSION}/deb/x86_64/LibreOffice_${LO_VERSION}_Linux_x86-64_deb_langpack_ja.tar.gz" -o /tmp/libreoffice_lang_${LO_VERSION}.tar.gz || abort "ダウンロードが中断されました"
     fi
 
     info "LibreOfficeを解凍しています..."
     cd /tmp
-    tar xf libreoffice.tar.gz
-    tar xf libreoffice_lang.tar.gz
+    tar xf libreoffice_${LO_VERSION}.tar.gz
+    tar xf libreoffice_lang_${LO_VERSION}.tar.gz
 
     info "フォントをインストールしています..."
     sudo apt install -y fonts-takao
@@ -55,7 +71,6 @@ function install_libreoffice {
     sudo apt install /tmp/LibreOffice_${LO_VERSION}*_Linux_x86-64_deb*/DEBS/*.deb
 
     rm -rf /tmp/LibreOffice_${LO_VERSION}*_Linux_x86-64_deb*
-    rm -f /tmp/libreoffice*.tar.gz
     info "インストールが完了しました。\n"
     caution "ターミナルアプリを右クリックし、Linuxをシャットダウンしてください。"
     caution "その後、再度ターミナルを開いてください。"
