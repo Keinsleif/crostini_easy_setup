@@ -34,7 +34,6 @@ function install_libreoffice {
         ver_num=`IFS=""; echo "${v[*]}"`
         IFS=. v=($LO_VERSION)
         lo_ver=`IFS=""; echo "${v[*]}"`
-        echo $lo_ver
         if [ "${version}" = "${LO_VERSION}" ]; then
             info "最新バージョンがすでにインストールされています"
             exit
