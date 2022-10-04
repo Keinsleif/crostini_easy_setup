@@ -26,7 +26,7 @@ sudo apt install -y fcitx-mozc
 #sudo apt install -y fonts-noto-cjk fonts-noto-cjk-extra
 
 info "Fcitxを入力メゾットに設定しています..."
-sudo bash -c "echo -e \"Environment=\\\"GTK_IM_MODULE=fcitx\\\"\nEnvironment=\\\"QT_IM_MODULE=fcitx\\\"\nEnvironment=\\\"XMODIFIRES=@im=fcitx\\\"\nEnvironment=\\\"GDK_BACKEND=x11\\\"\n\" >> /etc/environment.d/fcitx.conf"
+sudo bash -c "echo -e \"GTK_IM_MODULE=fcitx\nQT_IM_MODULE=fcitx\nXMODIFIRES=@im=fcitx\nGDK_BACKEND=x11\n\" > /etc/environment.d/fcitx.conf"
 ##Deprecated in bullseye
 #sudo bash -c "echo -e \"Environment=\\\"GTK_IM_MODULE=fcitx\\\"\nEnvironment=\\\"QT_IM_MODULE=fcitx\\\"\nEnvironment=\\\"XMODIFIRES=@im=fcitx\\\"\nEnvironment=\\\"GDK_BACKEND=x11\\\"\n\" >> /etc/systemd/user/cros-garcon.service.d/cros-garcon-override.conf"
 
