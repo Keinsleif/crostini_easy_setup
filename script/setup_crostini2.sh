@@ -11,7 +11,7 @@ function caution {
 MOZC_URL="https://raw.githubusercontent.com/kazuto28/crostini_easy_setup/master/data/config1.db"
 
 info "入力メゾットを設定しています..."
-fcitx-autostart
+/usr/bin/fcitx-autostart
 cp ~/.config/fcitx/profile ~/.config/fcitx/profile.bak
 sed -i -e "s/.*IMName=.*/IMName=mozc/g" ~/.config/fcitx/profile
 sed -i -e "s/.*EnabledIMList=.*/EnabledIMList=fcitx-keyboard-jp:True,mozc:True,fcitx-keyboard-us:False/g" ~/.config/fcitx/profile
