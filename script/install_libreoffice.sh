@@ -39,7 +39,16 @@ function install_libreoffice {
             info "最新バージョンがすでにインストールされています"
             exit
         elif [ ${ver_num} -lt ${lo_ver} ]; then
-            uninstall_libreoffice
+            read -p "旧バージョンを削除し、最新版をインストールします。よろしいですか? (y/N): " yn
+            case "$yn" in
+                [yY]*)
+                    uninstall_libreoffice
+                    ;;
+                *)
+                    info "中止しました"
+                    exit
+                    ;;
+            esac
         fi
     fi
     unset IFS
