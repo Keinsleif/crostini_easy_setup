@@ -50,6 +50,7 @@ function uninstall_ydlg {
 		sudo apt remove -y youtube-dlg
 		sudo apt autoremove -y
 	else
+		info "中止しました"
 		exit
 	fi
 }
@@ -62,12 +63,7 @@ fi
 case $CMD in
 	install)    install_ydlg
 		;;
-	uninstall)
-        read -p "アンインストールを開始します。よろしいですか? (y/N): " yn
-        case "$yn" in
-            [yY]*) uninstall_ydlg;;
-            *) info "中止しました";;
-        esac
+	uninstall)	uninstall_ydlg;;
         ;;
 	help)	usage
 		;;
