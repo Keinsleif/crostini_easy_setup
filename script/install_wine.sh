@@ -1,12 +1,19 @@
 #!/bin/bash
 
-function abort {
-    echo -e "\e[1;31m$@\e[0m" 1>&2
-    exit 1
+OS_STABLE=("bullseye" "buster")
+OS_CODE=`env -i bash -c '. /etc/os-release; echo $VERSION_CODENAME'`
+
+function caution {
+    echo -e "\e[1;31m$@\e[0m"
 }
 
 function info {
     echo -e "\e[1;32m$@\e[0m"
+}
+
+function abort {
+    caution "$@"
+    exit 1
 }
 
 function usage {
@@ -17,6 +24,20 @@ function usage {
 	echo "    uninstall - uninstall Wine"
     echo "    help - show this message and exit"
 }
+
+function check_os {
+    local i
+    for i in ${OS_STABLE[@]}; do
+        if [[ ${i} = ${OS_CODE} ]]; then
+            return 0
+        fi
+    done
+    return 1
+}
+
+if ! check_os ; then
+    caution "このバージョンのCrostiniはテストされていません。エラーが出た場合は開発者に報告してください"
+fi
 
 function install_wine {
     TMP_DIR = "/tmp/install_wine"
@@ -31,7 +52,7 @@ function install_wine {
     sudo dpkg --add-architecture i386
     sudo mkdir -p /usr/local/share/keyrings
     sudo gpg --yes --no-default-keyring --keyring ${TMP_DIR}/wine.gpg --export --output /usr/local/share/keyrings/wine.gpg
-    sudo bash -c "echo -e 'deb [signed-by=/usr/local/share/keyrings/wine.gpg] https://dl.winehq.org/wine-builds/debian/ bullseye main' > /etc/apt/sources.list.d/wine.list"
+    sudo bash -c "echo -e 'deb [signed-by=/usr/local/share/keyrings/wine.gpg] https://dl.winehq.org/wine-builds/debian/ ${OS_CODE} main' > /etc/apt/sources.list.d/wine.list"
     sudo apt update
 
     info "Wineをインストールしています..."
