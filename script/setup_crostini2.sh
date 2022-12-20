@@ -33,7 +33,7 @@ if [ -d ~/.config/mozc ]; then
 elif [ -d ~/.mozc ]; then
     cp /tmp/config1.db ~/.mozc/
 else
-    warning "mozc設定ファイルが見つかりません。エラー文とともに開発者に報告してください"
+    caution "mozc設定ファイルが見つかりません。エラー文とともに開発者に報告してください"
 fi
 rm /tmp/config1.db
 
