@@ -4,7 +4,7 @@ function info {
     echo -e "\e[1;32m$@\e[0m"
 }
 
-SND_URL="https://raw.githubusercontent.com/kazuto28/crostini_easy_setup/master/script/setup_crostini2.sh"
+SND_URL="https://raw.githubusercontent.com/Keinsleif/crostini_easy_setup/master/script/setup_crostini2.sh"
 
 info "必要なパッケージをインストールしています..."
 sudo apt install -y debconf-i18n apt-utils locales
