@@ -20,7 +20,7 @@ function usage {
 
 function install_ydlg {
     info "ファイルをダウンロードしています..."
-    curl -L# "https://raw.githubusercontent.com/kazuto28/youtube-dl-gui/master/packages/youtube-dlg_0.4-1~w2d0_all.deb" -o /tmp/youtube-dlg.deb || abort "ダウンロードが中断されました"
+    curl -L# "https://raw.githubusercontent.com/Keinsleif/youtube-dl-gui/master/packages/youtube-dlg_0.4-1~w2d0_all.deb" -o /tmp/youtube-dlg.deb || abort "ダウンロードが中断されました"
     curl -L# "http://ftp.jaist.ac.jp/debian/pool/main/p/python-pypubsub/python3-pubsub_4.0.3-4_all.deb" -o /tmp/python3-pubsub.deb || abort "ダウンロードが中断されました"
 
     info "インストールしています..."
