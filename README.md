@@ -5,27 +5,27 @@ Crostiniの超簡単セットアップスクリプト(sh)
 ChromebookのLinux,Crostiniを日本語でセットアップするスクリプトです。
 日本語にLInuxを設定し、日本語入力できるようにします。
 ```
-curl -L https://bit.ly/3xpRazQ | bash
+curl -L https://bit.ly/43FMlD6 | bash
 ```
 
 ## LibreOffice Setup
 Libreofficeをセットアップするスクリプトです。
 ```
-curl -L https://bit.ly/3pXMizj | bash
+curl -L https://bit.ly/3CFUefX | bash
 ```
 
 ## Youtube DL GUI Setup (Deprecated)
 Youtubeダウンローダーをセットアップするスクリプトです。
 最新のCrostini(bullseye以降)では動作しません。
 ```
-curl -L https://bit.ly/3pZBiRX | bash
+curl -L https://bit.ly/3JvskHl | bash
 ```
 
 ## Youtube DL GUI (Improved) Setup
 Youtube-DL-GUIの強化版(自作)です。  
 Python3で書かれている他、動画と同じように画質選択ができるようになりました。
 ```
-curl -L https://bit.ly/3xW9GjB | bash
+curl -L https://bit.ly/3J7JA5f | bash
 ```
 
 ## Wine Setup (Experimental)
