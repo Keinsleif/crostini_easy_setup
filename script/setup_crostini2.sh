@@ -8,7 +8,7 @@ function caution {
     echo -e "\e[1;31m$@\e[0m"
 }
 
-MOZC_URL="https://raw.githubusercontent.com/kazuto28/crostini_easy_setup/master/data/config1.db"
+MOZC_URL="https://raw.githubusercontent.com/Keinsleif/crostini_easy_setup/master/data/config1.db"
 
 info "入力メゾットを設定しています..."
 /usr/bin/fcitx-autostart
